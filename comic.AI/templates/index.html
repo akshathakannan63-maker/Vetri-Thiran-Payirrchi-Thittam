@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ title }}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <div class="logo">
+        ComicCraft
+    </div>
+
+    <div class="header-subtitle">
+        AI Comic Story Creator
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <section class="hero">
+
+        <div class="badge">
+            GENERATIVE AI PROJECT
+        </div>
+
+        <h1>
+            Turn your idea into a comic.
+        </h1>
+
+        <p>
+            Create a five-panel comic story
+            with AI-generated narration,
+            dialogue and illustrations.
+        </p>
+
+    </section>
+
+
+    {% if error %}
+
+    <div class="error-box">
+
+        <strong>
+            Something went wrong:
+        </strong>
+
+        <p>
+            {{ error }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+    <section class="form-card">
+
+
+        <form
+            action="/generate"
+            method="post"
+            onsubmit="showLoading()"
+        >
+
+
+            <div class="form-group">
+
+                <label for="story_prompt">
+                    Story Prompt
+                </label>
+
+                <textarea
+                    id="story_prompt"
+                    name="story_prompt"
+                    placeholder="Example: A brave fox exploring an enchanted forest..."
+                    required
+                >{{ form.story_prompt if form else "" }}</textarea>
+
+            </div>
+
+
+            <div class="two-column">
+
+
+                <div class="form-group">
+
+                    <label for="character_name">
+                        Main Character Name
+                    </label>
+
+                    <input
+                        id="character_name"
+                        name="character_name"
+                        type="text"
+                        placeholder="Ravi"
+                        value="{{ form.character_name if form else '' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="setting">
+                        Setting
+                    </label>
+
+                    <select
+                        id="setting"
+                        name="setting"
+                        required
+                    >
+
+                        <option value="">
+                            Select setting
+                        </option>
+
+                        <option value="Forest">
+                            Forest
+                        </option>
+
+                        <option value="School">
+                            School
+                        </option>
+
+                        <option value="City">
+                            City
+                        </option>
+
+                        <option value="Space">
+                            Space
+                        </option>
+
+                        <option value="Fantasy Kingdom">
+                            Fantasy Kingdom
+                        </option>
+
+                        <option value="Underwater World">
+                            Underwater World
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="tone">
+                        Story Tone
+                    </label>
+
+                    <select
+                        id="tone"
+                        name="tone"
+                        required
+                    >
+
+                        <option value="">
+                            Select tone
+                        </option>
+
+                        <option value="Funny">
+                            Funny
+                        </option>
+
+                        <option value="Dramatic">
+                            Dramatic
+                        </option>
+
+                        <option value="Adventurous">
+                            Adventurous
+                        </option>
+
+                        <option value="Mysterious">
+                            Mysterious
+                        </option>
+
+                        <option value="Light-hearted">
+                            Light-hearted
+                        </option>
+
+                        <option value="Poetic">
+                            Poetic
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="art_style">
+                        Art Style
+                    </label>
+
+                    <select
+                        id="art_style"
+                        name="art_style"
+                        required
+                    >
+
+                        <option value="">
+                            Select art style
+                        </option>
+
+                        <option value="Comic Book">
+                            Comic Book
+                        </option>
+
+                        <option value="Anime">
+                            Anime
+                        </option>
+
+                        <option value="Pixel Art">
+                            Pixel Art
+                        </option>
+
+                        <option value="Realistic">
+                            Realistic
+                        </option>
+
+                        <option value="Watercolor">
+                            Watercolor
+                        </option>
+
+                        <option value="Graphic Novel">
+                            Graphic Novel
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="generate-button"
+                id="generateButton"
+            >
+
+                <span id="buttonText">
+                    Generate My Comic
+                </span>
+
+                <span
+                    id="loadingSpinner"
+                    class="spinner hidden"
+                ></span>
+
+            </button>
+
+
+        </form>
+
+
+    </section>
+
+
+    <section class="information">
+
+
+        <div class="info-card">
+
+            <h3>
+                01
+            </h3>
+
+            <h2>
+                Describe
+            </h2>
+
+            <p>
+                Enter your story idea and
+                character information.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>
+                02
+            </h3>
+
+            <h2>
+                Generate
+            </h2>
+
+            <p>
+                AI creates your story,
+                dialogue and illustrations.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>
+                03
+            </h3>
+
+            <h2>
+                Download
+            </h2>
+
+            <p>
+                View your comic and download
+                the finished PDF.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<footer>
+
+    ComicCraft
+    <span>•</span>
+    Gemini + Stable Diffusion
+
+</footer>
+
+
+<script
+    src="/static/script.js"
+></script>
+
+
+</body>
+
+</html>
